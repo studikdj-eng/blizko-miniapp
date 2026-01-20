@@ -21,24 +21,19 @@
       --bubbleMe:#fff1ea;
       --bubbleOther:#f6f6f6;
     }
-
     *{ box-sizing: border-box; }
-
     body{
       margin:0;
       background:var(--bg);
       color:var(--text);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
     }
-
     .wrap{
       max-width: 520px;
       margin: 0 auto;
       padding: 16px;
       padding-bottom: 120px;
     }
-
-    /* TOPBAR */
     .topbar{
       display:flex;
       align-items:center;
@@ -46,7 +41,6 @@
       gap:12px;
       margin-bottom: 14px;
     }
-
     .brand{
       display:flex;
       align-items:center;
@@ -55,13 +49,11 @@
       letter-spacing: .2px;
       font-size: 18px;
     }
-
     .dot{
       width:10px;height:10px;border-radius:999px;
       background: linear-gradient(135deg, var(--accent), #ff6f91);
       box-shadow: 0 6px 16px rgba(255,154,106,.45);
     }
-
     .me{
       font-size: 13px;
       color: var(--muted);
@@ -69,27 +61,22 @@
       line-height: 1.2;
       user-select:none;
     }
-
-    /* LIST */
     .title{
       font-size: 22px;
       font-weight: 800;
       margin: 6px 0 10px;
     }
-
     .subtitle{
       color: var(--muted);
       margin: 0 0 14px;
       font-size: 14px;
     }
-
     .list{
       display:flex;
       flex-direction:column;
       gap: 12px;
       margin-top: 10px;
     }
-
     .chat{
       background: var(--card);
       border: 1px solid var(--border);
@@ -100,7 +87,6 @@
       gap: 12px;
       align-items: center;
     }
-
     .avatar{
       width: 54px; height: 54px;
       border-radius: 16px;
@@ -114,19 +100,16 @@
       flex: 0 0 auto;
       overflow:hidden;
     }
-
     .content{
       flex: 1 1 auto;
       min-width: 0;
     }
-
     .row1{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap: 10px;
     }
-
     .name{
       font-weight: 800;
       font-size: 16px;
@@ -135,7 +118,6 @@
       text-overflow: ellipsis;
       max-width: 240px;
     }
-
     .pill{
       background: var(--pill);
       border: 1px solid var(--border);
@@ -146,7 +128,6 @@
       white-space: nowrap;
       flex: 0 0 auto;
     }
-
     .row2{
       margin-top: 6px;
       display:flex;
@@ -154,7 +135,6 @@
       justify-content:space-between;
       gap: 10px;
     }
-
     .preview{
       color: var(--muted);
       font-size: 13px;
@@ -163,7 +143,6 @@
       text-overflow: ellipsis;
       max-width: 280px;
     }
-
     .btn{
       border: none;
       border-radius: 14px;
@@ -177,7 +156,6 @@
       flex: 0 0 auto;
     }
     .btn:active{ transform: translateY(1px); }
-
     .empty{
       border: 1px dashed var(--border);
       border-radius: var(--radius);
@@ -185,8 +163,6 @@
       color: var(--muted);
       background: #fafafa;
     }
-
-    /* CHAT SCREEN */
     .chatHeader{
       display:flex;
       align-items:center;
@@ -194,7 +170,6 @@
       gap: 10px;
       margin-bottom: 12px;
     }
-
     .back{
       border: 1px solid var(--border);
       background: #fff;
@@ -204,7 +179,6 @@
       cursor:pointer;
       flex: 0 0 auto;
     }
-
     .chatTitle{
       display:flex;
       flex-direction:column;
@@ -212,7 +186,6 @@
       min-width: 0;
       flex: 1 1 auto;
     }
-
     .chatTitle .who{
       font-weight: 900;
       font-size: 16px;
@@ -220,29 +193,22 @@
       overflow:hidden;
       text-overflow: ellipsis;
     }
-
     .chatTitle .timer{
       color: var(--muted);
       font-size: 12px;
     }
-
     .messages{
       display:flex;
       flex-direction:column;
       gap: 10px;
       padding-bottom: 8px;
     }
-
     .msgRow{
       display:flex;
       gap:10px;
       align-items:flex-end;
     }
-
-    .msgRow.me{
-      justify-content:flex-end;
-    }
-
+    .msgRow.me{ justify-content:flex-end; }
     .bubble{
       max-width: 82%;
       padding: 10px 12px;
@@ -254,25 +220,20 @@
       word-break: break-word;
       white-space: pre-wrap;
     }
-
     .bubble.me{
       background: var(--bubbleMe);
       border-top-right-radius: 8px;
     }
-
     .bubble.other{
       background: var(--bubbleOther);
       border-top-left-radius: 8px;
     }
-
     .time{
       font-size: 11px;
       color: var(--muted);
       user-select:none;
       flex: 0 0 auto;
     }
-
-    /* INPUT BAR */
     .inputBar{
       position: fixed;
       left:0; right:0; bottom:0;
@@ -281,7 +242,6 @@
       border-top: 1px solid var(--border);
       padding: 10px 12px;
     }
-
     .inputInner{
       max-width: 520px;
       margin: 0 auto;
@@ -289,7 +249,6 @@
       gap: 10px;
       align-items:center;
     }
-
     .field{
       flex: 1 1 auto;
       border: 1px solid var(--border);
@@ -298,7 +257,6 @@
       font-size: 14px;
       outline: none;
     }
-
     .send{
       border: none;
       border-radius: 14px;
@@ -311,13 +269,11 @@
       box-shadow: 0 10px 22px rgba(255,154,106,.35);
       flex: 0 0 auto;
     }
-
     .note{
       color: var(--muted);
       font-size: 12px;
       margin-top: 10px;
     }
-
     .hidden{ display:none; }
   </style>
 </head>
@@ -356,7 +312,7 @@
       <div id="messages" class="messages"></div>
 
       <div class="note" id="chatNote">
-        Сейчас это UI-режим. Дальше подключим сервер и реальные сообщения.
+        Реальный чат внутри бота. Сообщения уходят на сервер.
       </div>
     </div>
 
@@ -372,53 +328,14 @@
     const tg = window.Telegram.WebApp;
     tg.ready();
 
-    // ===== USER =====
+    // ВАЖНО: один домен = один сервис. API_BASE берём автоматически.
+    const API_BASE = location.origin;
+
     const user = tg.initDataUnsafe?.user;
     document.getElementById("me").textContent =
       user ? `Ты: ${user.first_name} (id: ${user.id})` : "Открой через Telegram";
 
-    // ===== DEMO DATA =====
-    const now = Date.now();
-    let chats = [
-      {
-        chatId: "c1",
-        name: "Алиса",
-        last: "Окей, тогда сегодня без спешки 🙂",
-        expiresAt: now + 1000 * 60 * 60 * 21 + 1000 * 60 * 13,
-        avatarText: "А",
-        messages: [
-          { from: "other", text: "Привет. У тебя тоже всё быстро и по делу?", ts: now - 1000*60*18 },
-          { from: "me", text: "Да. Давай без долгих анкет. Ты где примерно?", ts: now - 1000*60*17 },
-          { from: "other", text: "Центр. Можем завтра кофе на час.", ts: now - 1000*60*16 },
-          { from: "me", text: "Окей. Сколько тебе удобно по времени?", ts: now - 1000*60*15 },
-        ]
-      },
-      {
-        chatId: "c2",
-        name: "Катя",
-        last: "Ты в каком районе? Я рядом.",
-        expiresAt: now + 1000 * 60 * 60 * 2 + 1000 * 60 * 5,
-        avatarText: "К",
-        messages: [
-          { from: "other", text: "Ты в каком районе?", ts: now - 1000*60*8 },
-          { from: "me", text: "Пока дома. Минут через 30 могу выйти.", ts: now - 1000*60*7 },
-          { from: "other", text: "О, супер. Давай ближе к метро.", ts: now - 1000*60*6 },
-        ]
-      },
-      {
-        chatId: "c3",
-        name: "Лиза",
-        last: "Давай коротко: кофе или прогулка?",
-        expiresAt: now + 1000 * 60 * 26,
-        avatarText: "Л",
-        messages: [
-          { from: "other", text: "Давай коротко: кофе или прогулка?", ts: now - 1000*60*3 },
-          { from: "me", text: "Прогулка. 40 минут, без лишнего.", ts: now - 1000*60*2 },
-        ]
-      }
-    ];
-
-    // ===== STATE =====
+    let chats = [];
     let activeChatId = null;
 
     function pad2(n){ return String(n).padStart(2, "0"); }
@@ -456,10 +373,56 @@
       return chats.find(c => c.chatId === activeChatId) || null;
     }
 
-    function renderList(){
-      // фильтруем истёкшие
+    async function apiGet(path){
+      const res = await fetch(`${API_BASE}${path}`, { method: "GET" });
+      const text = await res.text();
+      let data = null;
+      try { data = JSON.parse(text); } catch {}
+      if(!res.ok) throw new Error(`HTTP ${res.status}: ${text.slice(0,200)}`);
+      return data;
+    }
+
+    async function apiPost(path, body){
+      const res = await fetch(`${API_BASE}${path}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body || {})
+      });
+      const text = await res.text();
+      let data = null;
+      try { data = JSON.parse(text); } catch {}
+      if(!res.ok) throw new Error(`HTTP ${res.status}: ${text.slice(0,200)}`);
+      return data;
+    }
+
+    async function loadChats(){
+      if(!user?.id) return;
+      const data = await apiGet(`/api/chats?userId=${encodeURIComponent(user.id)}`);
+      chats = Array.isArray(data?.chats) ? data.chats : [];
+    }
+
+    async function loadMessages(chatId){
+      if(!user?.id) return [];
+      const data = await apiGet(`/api/messages?userId=${encodeURIComponent(user.id)}&chatId=${encodeURIComponent(chatId)}`);
+      return Array.isArray(data?.messages) ? data.messages : [];
+    }
+
+    async function renderList(){
+      try{
+        await loadChats();
+      } catch (e){
+        const list = document.getElementById("list");
+        list.innerHTML = "";
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.innerHTML = `<b>Ошибка загрузки.</b><br/>${String(e).replaceAll("<","&lt;")}`;
+        list.appendChild(empty);
+        document.getElementById("hint").textContent = "Проверь, что сервер запущен и /api/chats отвечает.";
+        return;
+      }
+
       const t = Date.now();
-      chats = chats.filter(c => c.expiresAt > t);
+      chats = chats.filter(c => (c.expiresAt ?? 0) > t);
 
       const list = document.getElementById("list");
       list.innerHTML = "";
@@ -469,9 +432,8 @@
         empty.className = "empty";
         empty.innerHTML = `<b>Пока нет активных чатов.</b><br/>Чат появится после взаимности и первого ответа.`;
         list.appendChild(empty);
-
         document.getElementById("hint").textContent =
-          "Подсказка: бот нужен для анкет и мэтчей, а общение — здесь.";
+          "Пока чат-лист пустой. Дальше мы свяжем это с мэтчами из бота.";
         return;
       }
 
@@ -489,16 +451,15 @@
             <div class="avatar" aria-hidden="true">${c.avatarText || "•"}</div>
             <div class="content">
               <div class="row1">
-                <div class="name">${c.name}</div>
+                <div class="name">${escapeHtml(c.name || "Без имени")}</div>
                 <div class="pill">⏳ ${formatRemaining(msLeft)}</div>
               </div>
               <div class="row2">
-                <div class="preview">${c.last || ""}</div>
-                <button class="btn" data-open="${c.chatId}">Открыть</button>
+                <div class="preview">${escapeHtml(c.last || "")}</div>
+                <button class="btn" data-open="${escapeAttr(c.chatId)}">Открыть</button>
               </div>
             </div>
           `;
-
           list.appendChild(el);
         });
 
@@ -507,14 +468,13 @@
       });
     }
 
-    function renderChat(){
+    async function renderChat(){
       const chat = getActiveChat();
       if(!chat){
         showList();
         return;
       }
 
-      // если чат истёк — выкидываем назад
       const msLeft = chat.expiresAt - Date.now();
       if(msLeft <= 0){
         tg.showAlert("Этот чат уже закончился.");
@@ -522,14 +482,25 @@
         return;
       }
 
-      document.getElementById("chatWho").textContent = chat.name;
+      document.getElementById("chatWho").textContent = chat.name || "Чат";
       document.getElementById("chatTimer").textContent = `⏳ Осталось: ${formatRemaining(msLeft)}`;
       document.getElementById("chatPill").textContent = formatRemaining(msLeft);
 
       const box = document.getElementById("messages");
       box.innerHTML = "";
 
-      chat.messages.forEach(m => {
+      let messages = [];
+      try{
+        messages = await loadMessages(chat.chatId);
+      } catch(e){
+        const row = document.createElement("div");
+        row.className = "empty";
+        row.innerHTML = `<b>Не удалось загрузить сообщения.</b><br/>${escapeHtml(String(e))}`;
+        box.appendChild(row);
+        return;
+      }
+
+      messages.forEach(m => {
         const row = document.createElement("div");
         row.className = "msgRow " + (m.from === "me" ? "me" : "other");
 
@@ -548,24 +519,19 @@
           row.appendChild(bubble);
           row.appendChild(time);
         }
-
         box.appendChild(row);
       });
-
-      // обновим last
-      const lastMsg = chat.messages[chat.messages.length - 1];
-      if(lastMsg) chat.last = lastMsg.text;
     }
 
     function scrollChatToBottom(){
       const box = document.getElementById("messages");
       setTimeout(() => {
-        window.scrollTo(0, document.body.scrollHeight);
         box.scrollTop = box.scrollHeight;
+        window.scrollTo(0, document.body.scrollHeight);
       }, 0);
     }
 
-    function sendMessage(){
+    async function sendMessage(){
       const chat = getActiveChat();
       if(!chat) return;
 
@@ -580,33 +546,23 @@
       const text = (input.value || "").trim();
       if(text.length === 0) return;
 
-      chat.messages.push({ from: "me", text, ts: Date.now() });
       input.value = "";
 
-      renderChat();
+      try{
+        await apiPost("/api/send", {
+          userId: user.id,
+          chatId: chat.chatId,
+          text
+        });
+      } catch(e){
+        tg.showAlert("Не удалось отправить сообщение: " + String(e));
+        return;
+      }
+
+      await renderChat();
       scrollChatToBottom();
-
-      // маленькая авто-реакция (демо)
-      setTimeout(() => {
-        const chat2 = getActiveChat();
-        if(!chat2) return;
-        if(chat2.expiresAt - Date.now() <= 0) return;
-
-        const answers = [
-          "Окей 🙂",
-          "Понял. Давай так.",
-          "Коротко и ясно.",
-          "Когда тебе удобно?",
-          "Давай ближе к вечеру."
-        ];
-        const reply = answers[Math.floor(Math.random() * answers.length)];
-        chat2.messages.push({ from: "other", text: reply, ts: Date.now() });
-        renderChat();
-        scrollChatToBottom();
-      }, 900);
     }
 
-    // ===== EVENTS =====
     document.getElementById("btnBack").onclick = showList;
     document.getElementById("btnSend").onclick = sendMessage;
 
@@ -617,7 +573,6 @@
       }
     });
 
-    // обновляем таймеры каждые 20 секунд
     setInterval(() => {
       if(activeChatId){
         renderChat();
@@ -626,7 +581,18 @@
       }
     }, 20000);
 
-    // стартуем со списка
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+    function escapeAttr(str) {
+      return escapeHtml(str).replaceAll("`", "&#096;");
+    }
+
     renderList();
   </script>
 </body>
