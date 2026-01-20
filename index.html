@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BLIZKO</title>
-
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
@@ -18,9 +17,12 @@
       --accent:#ff9a6a;
       --accent2:#ffb08a;
       --pill:#f6f6f6;
-      --danger:#ff4d4d;
       --radius:18px;
+      --bubbleMe:#fff1ea;
+      --bubbleOther:#f6f6f6;
     }
+
+    *{ box-sizing: border-box; }
 
     body{
       margin:0;
@@ -33,9 +35,10 @@
       max-width: 520px;
       margin: 0 auto;
       padding: 16px;
-      padding-bottom: 90px;
+      padding-bottom: 120px;
     }
 
+    /* TOPBAR */
     .topbar{
       display:flex;
       align-items:center;
@@ -67,6 +70,7 @@
       user-select:none;
     }
 
+    /* LIST */
     .title{
       font-size: 22px;
       font-weight: 800;
@@ -108,10 +112,8 @@
       font-weight: 800;
       color:#7a3a22;
       flex: 0 0 auto;
-      position:relative;
       overflow:hidden;
     }
-    .avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
 
     .content{
       flex: 1 1 auto;
@@ -174,7 +176,6 @@
       box-shadow: 0 10px 22px rgba(255,154,106,.35);
       flex: 0 0 auto;
     }
-
     .btn:active{ transform: translateY(1px); }
 
     .empty{
@@ -185,74 +186,185 @@
       background: #fafafa;
     }
 
-    .empty b{ color: var(--text); }
+    /* CHAT SCREEN */
+    .chatHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
 
-    .footer{
+    .back{
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-weight: 800;
+      cursor:pointer;
+      flex: 0 0 auto;
+    }
+
+    .chatTitle{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .chatTitle .who{
+      font-weight: 900;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chatTitle .timer{
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .messages{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      padding-bottom: 8px;
+    }
+
+    .msgRow{
+      display:flex;
+      gap:10px;
+      align-items:flex-end;
+    }
+
+    .msgRow.me{
+      justify-content:flex-end;
+    }
+
+    .bubble{
+      max-width: 82%;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.25;
+      box-shadow: 0 10px 22px rgba(0,0,0,.04);
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .bubble.me{
+      background: var(--bubbleMe);
+      border-top-right-radius: 8px;
+    }
+
+    .bubble.other{
+      background: var(--bubbleOther);
+      border-top-left-radius: 8px;
+    }
+
+    .time{
+      font-size: 11px;
+      color: var(--muted);
+      user-select:none;
+      flex: 0 0 auto;
+    }
+
+    /* INPUT BAR */
+    .inputBar{
       position: fixed;
       left:0; right:0; bottom:0;
       background: rgba(255,255,255,.92);
       backdrop-filter: blur(10px);
       border-top: 1px solid var(--border);
-      padding: 12px 16px;
+      padding: 10px 12px;
     }
 
-    .footer .inner{
+    .inputInner{
       max-width: 520px;
-      margin:0 auto;
+      margin: 0 auto;
       display:flex;
       gap: 10px;
+      align-items:center;
     }
 
-    .ghost{
-      flex:1;
+    .field{
+      flex: 1 1 auto;
       border: 1px solid var(--border);
-      background: #fff;
-      color: #111;
       border-radius: 14px;
       padding: 12px;
-      font-weight: 800;
-      cursor:pointer;
+      font-size: 14px;
+      outline: none;
     }
 
-    .accent{
-      flex:1;
+    .send{
       border: none;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff;
       border-radius: 14px;
-      padding: 12px;
-      font-weight: 800;
-      cursor:pointer;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
       box-shadow: 0 10px 22px rgba(255,154,106,.35);
+      flex: 0 0 auto;
     }
 
-    .small{
-      font-size: 12px;
+    .note{
       color: var(--muted);
+      font-size: 12px;
       margin-top: 10px;
     }
+
+    .hidden{ display:none; }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand"><span class="dot"></span> BLIZKO</div>
-      <div class="me" id="me">Загрузка…</div>
+  <!-- LIST SCREEN -->
+  <div id="screenList">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand"><span class="dot"></span> BLIZKO</div>
+        <div class="me" id="me">Загрузка…</div>
+      </div>
+
+      <div class="title">💬 Мои чаты</div>
+      <div class="subtitle">Здесь только активные диалоги. Когда время закончится — чат исчезнет.</div>
+
+      <div id="list" class="list"></div>
+      <div class="note" id="hint"></div>
     </div>
-
-    <div class="title">💬 Мои чаты</div>
-    <div class="subtitle">Здесь только активные диалоги. Когда время закончится — чат исчезнет.</div>
-
-    <div id="list" class="list"></div>
-
-    <div class="small" id="hint"></div>
   </div>
 
-  <div class="footer">
-    <div class="inner">
-      <button class="ghost" id="btnRefresh">Обновить</button>
-      <button class="accent" id="btnInfo">Как это работает</button>
+  <!-- CHAT SCREEN -->
+  <div id="screenChat" class="hidden">
+    <div class="wrap">
+      <div class="chatHeader">
+        <button class="back" id="btnBack">← Чаты</button>
+
+        <div class="chatTitle">
+          <div class="who" id="chatWho">Чат</div>
+          <div class="timer" id="chatTimer">⏳ ...</div>
+        </div>
+
+        <div class="pill" id="chatPill">24ч</div>
+      </div>
+
+      <div id="messages" class="messages"></div>
+
+      <div class="note" id="chatNote">
+        Сейчас это UI-режим. Дальше подключим сервер и реальные сообщения.
+      </div>
+    </div>
+
+    <div class="inputBar">
+      <div class="inputInner">
+        <input id="input" class="field" placeholder="Написать сообщение…" maxlength="500" />
+        <button id="btnSend" class="send">Отпр</button>
+      </div>
     </div>
   </div>
 
@@ -260,35 +372,54 @@
     const tg = window.Telegram.WebApp;
     tg.ready();
 
+    // ===== USER =====
     const user = tg.initDataUnsafe?.user;
     document.getElementById("me").textContent =
       user ? `Ты: ${user.first_name} (id: ${user.id})` : "Открой через Telegram";
 
-    // Заглушки чатов (потом заменим данными с сервера)
+    // ===== DEMO DATA =====
     const now = Date.now();
     let chats = [
       {
         chatId: "c1",
         name: "Алиса",
         last: "Окей, тогда сегодня без спешки 🙂",
-        expiresAt: now + 1000 * 60 * 60 * 21 + 1000 * 60 * 13, // ~21ч 13м
-        avatarText: "А"
+        expiresAt: now + 1000 * 60 * 60 * 21 + 1000 * 60 * 13,
+        avatarText: "А",
+        messages: [
+          { from: "other", text: "Привет. У тебя тоже всё быстро и по делу?", ts: now - 1000*60*18 },
+          { from: "me", text: "Да. Давай без долгих анкет. Ты где примерно?", ts: now - 1000*60*17 },
+          { from: "other", text: "Центр. Можем завтра кофе на час.", ts: now - 1000*60*16 },
+          { from: "me", text: "Окей. Сколько тебе удобно по времени?", ts: now - 1000*60*15 },
+        ]
       },
       {
         chatId: "c2",
         name: "Катя",
         last: "Ты в каком районе? Я рядом.",
-        expiresAt: now + 1000 * 60 * 60 * 2 + 1000 * 60 * 5, // ~2ч 5м
-        avatarText: "К"
+        expiresAt: now + 1000 * 60 * 60 * 2 + 1000 * 60 * 5,
+        avatarText: "К",
+        messages: [
+          { from: "other", text: "Ты в каком районе?", ts: now - 1000*60*8 },
+          { from: "me", text: "Пока дома. Минут через 30 могу выйти.", ts: now - 1000*60*7 },
+          { from: "other", text: "О, супер. Давай ближе к метро.", ts: now - 1000*60*6 },
+        ]
       },
       {
         chatId: "c3",
         name: "Лиза",
         last: "Давай коротко: кофе или прогулка?",
-        expiresAt: now + 1000 * 60 * 26, // ~26м
-        avatarText: "Л"
+        expiresAt: now + 1000 * 60 * 26,
+        avatarText: "Л",
+        messages: [
+          { from: "other", text: "Давай коротко: кофе или прогулка?", ts: now - 1000*60*3 },
+          { from: "me", text: "Прогулка. 40 минут, без лишнего.", ts: now - 1000*60*2 },
+        ]
       }
     ];
+
+    // ===== STATE =====
+    let activeChatId = null;
 
     function pad2(n){ return String(n).padStart(2, "0"); }
 
@@ -301,7 +432,31 @@
       return `${h}ч ${pad2(m)}м`;
     }
 
-    function render(){
+    function formatTime(ts){
+      const d = new Date(ts);
+      return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+    }
+
+    function showList(){
+      document.getElementById("screenChat").classList.add("hidden");
+      document.getElementById("screenList").classList.remove("hidden");
+      activeChatId = null;
+      renderList();
+    }
+
+    function showChat(chatId){
+      activeChatId = chatId;
+      document.getElementById("screenList").classList.add("hidden");
+      document.getElementById("screenChat").classList.remove("hidden");
+      renderChat();
+      scrollChatToBottom();
+    }
+
+    function getActiveChat(){
+      return chats.find(c => c.chatId === activeChatId) || null;
+    }
+
+    function renderList(){
       // фильтруем истёкшие
       const t = Date.now();
       chats = chats.filter(c => c.expiresAt > t);
@@ -316,15 +471,15 @@
         list.appendChild(empty);
 
         document.getElementById("hint").textContent =
-          "Подсказка: бот нужен для анкет и мэтчей, а общение будет здесь.";
+          "Подсказка: бот нужен для анкет и мэтчей, а общение — здесь.";
         return;
       }
 
       document.getElementById("hint").textContent =
-        "Нажми «Открыть», чтобы писать в выбранный чат. (Пока это демо-экран.)";
+        "Нажми «Открыть», чтобы перейти в переписку.";
 
       chats
-        .sort((a,b) => a.expiresAt - b.expiresAt) // кто быстрее истечёт — выше
+        .sort((a,b) => a.expiresAt - b.expiresAt)
         .forEach(c => {
           const msLeft = c.expiresAt - Date.now();
 
@@ -347,23 +502,132 @@
           list.appendChild(el);
         });
 
-      // обработчики кнопок "Открыть"
       [...document.querySelectorAll('button[data-open]')].forEach(btn => {
-        btn.onclick = () => {
-          const id = btn.getAttribute("data-open");
-          tg.showAlert(`Открываем чат ${id} (следующий шаг — экран переписки)`);
-        };
+        btn.onclick = () => showChat(btn.getAttribute("data-open"));
       });
     }
 
-    document.getElementById("btnRefresh").onclick = render;
+    function renderChat(){
+      const chat = getActiveChat();
+      if(!chat){
+        showList();
+        return;
+      }
 
-    document.getElementById("btnInfo").onclick = () => {
-      tg.showAlert("Чаты живут ограниченное время. Контакты не показываем. Общение — внутри BLIZKO Mini App.");
-    };
+      // если чат истёк — выкидываем назад
+      const msLeft = chat.expiresAt - Date.now();
+      if(msLeft <= 0){
+        tg.showAlert("Этот чат уже закончился.");
+        showList();
+        return;
+      }
 
-    render();
-    setInterval(render, 30000); // обновляем таймеры раз в 30 секунд
+      document.getElementById("chatWho").textContent = chat.name;
+      document.getElementById("chatTimer").textContent = `⏳ Осталось: ${formatRemaining(msLeft)}`;
+      document.getElementById("chatPill").textContent = formatRemaining(msLeft);
+
+      const box = document.getElementById("messages");
+      box.innerHTML = "";
+
+      chat.messages.forEach(m => {
+        const row = document.createElement("div");
+        row.className = "msgRow " + (m.from === "me" ? "me" : "other");
+
+        const bubble = document.createElement("div");
+        bubble.className = "bubble " + (m.from === "me" ? "me" : "other");
+        bubble.textContent = m.text;
+
+        const time = document.createElement("div");
+        time.className = "time";
+        time.textContent = formatTime(m.ts);
+
+        if(m.from === "me"){
+          row.appendChild(time);
+          row.appendChild(bubble);
+        } else {
+          row.appendChild(bubble);
+          row.appendChild(time);
+        }
+
+        box.appendChild(row);
+      });
+
+      // обновим last
+      const lastMsg = chat.messages[chat.messages.length - 1];
+      if(lastMsg) chat.last = lastMsg.text;
+    }
+
+    function scrollChatToBottom(){
+      const box = document.getElementById("messages");
+      setTimeout(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+        box.scrollTop = box.scrollHeight;
+      }, 0);
+    }
+
+    function sendMessage(){
+      const chat = getActiveChat();
+      if(!chat) return;
+
+      const msLeft = chat.expiresAt - Date.now();
+      if(msLeft <= 0){
+        tg.showAlert("Чат закончился. Сообщения больше не отправляются.");
+        showList();
+        return;
+      }
+
+      const input = document.getElementById("input");
+      const text = (input.value || "").trim();
+      if(text.length === 0) return;
+
+      chat.messages.push({ from: "me", text, ts: Date.now() });
+      input.value = "";
+
+      renderChat();
+      scrollChatToBottom();
+
+      // маленькая авто-реакция (демо)
+      setTimeout(() => {
+        const chat2 = getActiveChat();
+        if(!chat2) return;
+        if(chat2.expiresAt - Date.now() <= 0) return;
+
+        const answers = [
+          "Окей 🙂",
+          "Понял. Давай так.",
+          "Коротко и ясно.",
+          "Когда тебе удобно?",
+          "Давай ближе к вечеру."
+        ];
+        const reply = answers[Math.floor(Math.random() * answers.length)];
+        chat2.messages.push({ from: "other", text: reply, ts: Date.now() });
+        renderChat();
+        scrollChatToBottom();
+      }, 900);
+    }
+
+    // ===== EVENTS =====
+    document.getElementById("btnBack").onclick = showList;
+    document.getElementById("btnSend").onclick = sendMessage;
+
+    document.getElementById("input").addEventListener("keydown", (e) => {
+      if(e.key === "Enter"){
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    // обновляем таймеры каждые 20 секунд
+    setInterval(() => {
+      if(activeChatId){
+        renderChat();
+      } else {
+        renderList();
+      }
+    }, 20000);
+
+    // стартуем со списка
+    renderList();
   </script>
 </body>
 </html>
