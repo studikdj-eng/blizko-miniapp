@@ -1,67 +1,369 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BLIZKO</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BLIZKO</title>
 
-    <!-- Telegram Mini App API -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <style>
-        body {
-            margin: 0;
-            padding: 16px;
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-            background: #fff;
-            color: #111;
-        }
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#666;
+      --card:#ffffff;
+      --border:#eeeeee;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --accent:#ff9a6a;
+      --accent2:#ffb08a;
+      --pill:#f6f6f6;
+      --danger:#ff4d4d;
+      --radius:18px;
+    }
 
-        .card {
-            border-radius: 16px;
-            padding: 16px;
-            border: 1px solid #eee;
-        }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
 
-        h1 {
-            margin-top: 0;
-            font-size: 22px;
-        }
+    .wrap{
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 16px;
+      padding-bottom: 90px;
+    }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            border: none;
-            font-size: 16px;
-            background: #ff9a6a;
-            color: white;
-            cursor: pointer;
-        }
-    </style>
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight: 800;
+      letter-spacing: .2px;
+      font-size: 18px;
+    }
+
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), #ff6f91);
+      box-shadow: 0 6px 16px rgba(255,154,106,.45);
+    }
+
+    .me{
+      font-size: 13px;
+      color: var(--muted);
+      text-align:right;
+      line-height: 1.2;
+      user-select:none;
+    }
+
+    .title{
+      font-size: 22px;
+      font-weight: 800;
+      margin: 6px 0 10px;
+    }
+
+    .subtitle{
+      color: var(--muted);
+      margin: 0 0 14px;
+      font-size: 14px;
+    }
+
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .chat{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      box-shadow: var(--shadow);
+      display:flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .avatar{
+      width: 54px; height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #ffe1d5, #ffd0ba);
+      border: 1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 800;
+      color:#7a3a22;
+      flex: 0 0 auto;
+      position:relative;
+      overflow:hidden;
+    }
+    .avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    .content{
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .row1{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+
+    .name{
+      font-weight: 800;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      max-width: 240px;
+    }
+
+    .pill{
+      background: var(--pill);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: #333;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .row2{
+      margin-top: 6px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+
+    .preview{
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      max-width: 280px;
+    }
+
+    .btn{
+      border: none;
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      box-shadow: 0 10px 22px rgba(255,154,106,.35);
+      flex: 0 0 auto;
+    }
+
+    .btn:active{ transform: translateY(1px); }
+
+    .empty{
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      color: var(--muted);
+      background: #fafafa;
+    }
+
+    .empty b{ color: var(--text); }
+
+    .footer{
+      position: fixed;
+      left:0; right:0; bottom:0;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+    }
+
+    .footer .inner{
+      max-width: 520px;
+      margin:0 auto;
+      display:flex;
+      gap: 10px;
+    }
+
+    .ghost{
+      flex:1;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: #111;
+      border-radius: 14px;
+      padding: 12px;
+      font-weight: 800;
+      cursor:pointer;
+    }
+
+    .accent{
+      flex:1;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      border-radius: 14px;
+      padding: 12px;
+      font-weight: 800;
+      cursor:pointer;
+      box-shadow: 0 10px 22px rgba(255,154,106,.35);
+    }
+
+    .small{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="card">
-        <h1>BLIZKO 💬</h1>
-        <p id="info">Загрузка…</p>
-        <button id="test">Проверить Mini App</button>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand"><span class="dot"></span> BLIZKO</div>
+      <div class="me" id="me">Загрузка…</div>
     </div>
 
-    <script>
+    <div class="title">💬 Мои чаты</div>
+    <div class="subtitle">Здесь только активные диалоги. Когда время закончится — чат исчезнет.</div>
+
+    <div id="list" class="list"></div>
+
+    <div class="small" id="hint"></div>
+  </div>
+
+  <div class="footer">
+    <div class="inner">
+      <button class="ghost" id="btnRefresh">Обновить</button>
+      <button class="accent" id="btnInfo">Как это работает</button>
+    </div>
+  </div>
+
+  <script>
     const tg = window.Telegram.WebApp;
     tg.ready();
 
     const user = tg.initDataUnsafe?.user;
+    document.getElementById("me").textContent =
+      user ? `Ты: ${user.first_name} (id: ${user.id})` : "Открой через Telegram";
 
-    document.getElementById("info").textContent =
-      user
-        ? `Ты: ${user.first_name} (id: ${user.id})`
-        : "Открой через Telegram";
+    // Заглушки чатов (потом заменим данными с сервера)
+    const now = Date.now();
+    let chats = [
+      {
+        chatId: "c1",
+        name: "Алиса",
+        last: "Окей, тогда сегодня без спешки 🙂",
+        expiresAt: now + 1000 * 60 * 60 * 21 + 1000 * 60 * 13, // ~21ч 13м
+        avatarText: "А"
+      },
+      {
+        chatId: "c2",
+        name: "Катя",
+        last: "Ты в каком районе? Я рядом.",
+        expiresAt: now + 1000 * 60 * 60 * 2 + 1000 * 60 * 5, // ~2ч 5м
+        avatarText: "К"
+      },
+      {
+        chatId: "c3",
+        name: "Лиза",
+        last: "Давай коротко: кофе или прогулка?",
+        expiresAt: now + 1000 * 60 * 26, // ~26м
+        avatarText: "Л"
+      }
+    ];
 
-    document.getElementById("test").onclick = () => {
-      tg.showAlert("Mini App работает ✅");
+    function pad2(n){ return String(n).padStart(2, "0"); }
+
+    function formatRemaining(ms){
+      if(ms <= 0) return "истёк";
+      const totalMin = Math.ceil(ms / 60000);
+      const h = Math.floor(totalMin / 60);
+      const m = totalMin % 60;
+      if(h <= 0) return `${m}м`;
+      return `${h}ч ${pad2(m)}м`;
+    }
+
+    function render(){
+      // фильтруем истёкшие
+      const t = Date.now();
+      chats = chats.filter(c => c.expiresAt > t);
+
+      const list = document.getElementById("list");
+      list.innerHTML = "";
+
+      if(chats.length === 0){
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.innerHTML = `<b>Пока нет активных чатов.</b><br/>Чат появится после взаимности и первого ответа.`;
+        list.appendChild(empty);
+
+        document.getElementById("hint").textContent =
+          "Подсказка: бот нужен для анкет и мэтчей, а общение будет здесь.";
+        return;
+      }
+
+      document.getElementById("hint").textContent =
+        "Нажми «Открыть», чтобы писать в выбранный чат. (Пока это демо-экран.)";
+
+      chats
+        .sort((a,b) => a.expiresAt - b.expiresAt) // кто быстрее истечёт — выше
+        .forEach(c => {
+          const msLeft = c.expiresAt - Date.now();
+
+          const el = document.createElement("div");
+          el.className = "chat";
+          el.innerHTML = `
+            <div class="avatar" aria-hidden="true">${c.avatarText || "•"}</div>
+            <div class="content">
+              <div class="row1">
+                <div class="name">${c.name}</div>
+                <div class="pill">⏳ ${formatRemaining(msLeft)}</div>
+              </div>
+              <div class="row2">
+                <div class="preview">${c.last || ""}</div>
+                <button class="btn" data-open="${c.chatId}">Открыть</button>
+              </div>
+            </div>
+          `;
+
+          list.appendChild(el);
+        });
+
+      // обработчики кнопок "Открыть"
+      [...document.querySelectorAll('button[data-open]')].forEach(btn => {
+        btn.onclick = () => {
+          const id = btn.getAttribute("data-open");
+          tg.showAlert(`Открываем чат ${id} (следующий шаг — экран переписки)`);
+        };
+      });
+    }
+
+    document.getElementById("btnRefresh").onclick = render;
+
+    document.getElementById("btnInfo").onclick = () => {
+      tg.showAlert("Чаты живут ограниченное время. Контакты не показываем. Общение — внутри BLIZKO Mini App.");
     };
-    </script>
+
+    render();
+    setInterval(render, 30000); // обновляем таймеры раз в 30 секунд
+  </script>
 </body>
 </html>
